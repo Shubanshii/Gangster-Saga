@@ -39,7 +39,7 @@ router.post("/questions", async (req, res) => {
 
   try {
     await question.save();
-    res.status(201).send(question, { redirect: "/profile" });
+    res.status(201).send(question);
   } catch (e) {
     res.status(400).send(e);
   }

@@ -56,19 +56,24 @@ function createQuestion() {
     o.owner = idStore;
     // hardcoded for now
     o.index = index;
+    o.redirect = "/profile";
     console.log(o);
     return o;
   };
 
   $(".add-question").submit(function(event) {
+    let postObject = JSON.stringify($(".add-question").serializeObject());
+    // // postObject.choices = postObject.choices.split(",");
+    console.log(postObject);
     $.ajax({
       type: "POST",
       url: "/questions",
       data: JSON.stringify($(".add-question").serializeObject()),
-      success: callback,
+      success: function() {},
       dataType: "json",
       contentType: "application/json"
     });
+
     event.preventDefault();
   });
 }
