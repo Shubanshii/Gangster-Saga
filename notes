@@ -1,0 +1,12 @@
+profile
+
+profile pic
+
+top score
+
+Niko TzikasNiko Tzikas8:40 PM
+router/:num
+
+req.params.num
+
+Questions.find({num:req.params.num}).then( .... res.render

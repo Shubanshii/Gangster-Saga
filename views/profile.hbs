@@ -2,16 +2,71 @@
 	<h1>Profile Page</h1>
 
 	{{#if user}}
-	    username: {{user.username}}
+	username: {{user.username}}
 	{{/if}}
+	<a href="/add-question">Add Question</a>
 	<form action="/newFormation" method="post">
-	  <input type="text" name="name" value="Formation">
-	  <input type="submit" value="Submit">
+		<input type="text" name="name" value="Formation">
+		<input type="submit" value="Submit">
 	</form>
+	<div>
+		<button class="delete">Delete Account</button>
+	</div>
 
 	{{#each formations}}
-		<ul>
-			<li><a href="/formation/{{this._id}}">{{this.name}}</a></li>
-		</ul>
-	{{/each}} 
+	<ul>
+		<li><a href="/formation/{{this._id}}">{{this.name}}</a></li>
+	</ul>
+	{{/each}}
+	<div>
+		<ul class="scores"></ul>
+	</div>
 </div>
+
+<script>
+
+	function getUsers(callback) {
+		$.ajax({
+			type: "GET",
+			url: "/accounts",
+			success: callback,
+			dataType: "json",
+			contentType: "application/json"
+		});
+
+	}
+
+	function appendScores(users) {
+		console.log(users)
+		users.forEach(user => {
+			$('.scores').append(`<li>${user.username}: ${user.points}</li>`);
+		})
+	}
+	getUsers(appendScores)
+
+	$('.delete').on('click', (e) => {
+		function getId(callback) {
+			$.ajax({
+				type: "GET",
+				url: "/get-id",
+				success: callback,
+				dataType: "json",
+				contentType: "application/json"
+			});
+		}
+
+		function deleteAccount(id) {
+			$.ajax({
+				type: 'DELETE',
+				url: `/account/${id}`,
+				success: alert('deleted'),
+				dataType: 'json',
+				contentType: 'application/json'
+			})
+		}
+		getId(deleteAccount);
+	})
+
+
+
+</script>
