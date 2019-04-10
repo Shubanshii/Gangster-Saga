@@ -16,29 +16,32 @@
       let video = `<iframe src="${youtubeLink}"  width="560" height="315"  frameborder="0" allowfullscreen></iframe>`
       // let video = `<iframe width="560" height="315" src="${youtubeLink}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
       $('body').append(video)
-      function getUser(callback) {
-        $.ajax({
-          type: "GET",
-          url: "/account/5caba693f71b2a4a988442a2",
-          success: callback,
-          dataType: "json",
-          contentType: "application/json"
-        });
+      if (youtubeLink !== "https://www.youtube.com/embed/1zBwKbq02ds?autoplay=1") {
+        function getUser(callback) {
+          $.ajax({
+            type: "GET",
+            url: "/account/5caba693f71b2a4a988442a2",
+            success: callback,
+            dataType: "json",
+            contentType: "application/json"
+          });
+        }
+
+        getUser(patchUser);
+        function patchUser(user) {
+          console.log(user.points)
+          user.points -= 1;
+          console.log(user.points)
+          $.ajax({
+            type: "PATCH",
+            url: "/account/5caba693f71b2a4a988442a2",
+            data: JSON.stringify({ points: user.points }),
+            dataType: "json",
+            contentType: "application/json"
+          });
+        }
       }
 
-      getUser(patchUser);
-      function patchUser(user) {
-        console.log(user.points)
-        user.points -= 1;
-        console.log(user.points)
-        $.ajax({
-          type: "PATCH",
-          url: "/account/5caba693f71b2a4a988442a2",
-          data: JSON.stringify({ points: user.points }),
-          dataType: "json",
-          contentType: "application/json"
-        });
-      }
 
     }
   })
