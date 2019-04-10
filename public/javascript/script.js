@@ -62,17 +62,21 @@ function createQuestion() {
   };
 
   $(".add-question").submit(function(event) {
-    let postObject = JSON.stringify($(".add-question").serializeObject());
-    // // postObject.choices = postObject.choices.split(",");
-    console.log(postObject);
-    $.ajax({
-      type: "POST",
-      url: "/questions",
-      data: JSON.stringify($(".add-question").serializeObject()),
-      success: function() {},
-      dataType: "json",
-      contentType: "application/json"
-    });
+    function postQuestion(callback) {
+      $.ajax({
+        type: "POST",
+        url: "/questions",
+        data: JSON.stringify($(".add-question").serializeObject()),
+        success: callback,
+        dataType: "json",
+        contentType: "application/json"
+      });
+    }
+    function redirect(redirect) {
+      console.log("redirect", redirect);
+      window.location = redirect.redirect;
+    }
+    postQuestion(redirect);
 
     event.preventDefault();
   });

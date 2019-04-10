@@ -25,6 +25,10 @@ const questionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "Account"
+  },
+  redirect: {
+    type: String,
+    required: true
   }
 });
 
