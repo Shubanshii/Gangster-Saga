@@ -48,23 +48,13 @@ router.post("/questions", async (req, res) => {
 router.get("/question/:index", async (req, res) => {
   try {
     await Question.findOne({ index: req.params.index }).then(data => {
-      console.log("data", data);
-
+      console.log(data);
+      let question = data.question;
+      let choices = data.choices;
+      let answer = data.answer;
+      let youtubeLink = data.youtubeLink;
       // res.render("question", { question.question, question.answer, question.choices, question.youtubeLink });
-      if (data === null) {
-        let question = "You win!";
-        let choices = ["YOUWIN!"];
-        let answer = "";
-        let youtubeLink =
-          "https://www.youtube.com/embed/1zBwKbq02ds?autoplay=1";
-        res.render("question", { question, answer, choices, youtubeLink });
-      } else {
-        let question = data.question;
-        let choices = data.choices;
-        let answer = data.answer;
-        let youtubeLink = data.youtubeLink;
-        res.render("question", { question, answer, choices, youtubeLink });
-      }
+      res.render("question", { question, answer, choices, youtubeLink });
     });
   } catch (e) {}
 });
@@ -111,7 +101,6 @@ router.get("/question/:index", async (req, res) => {
 //   let youtubeLink = "https://www.youtube.com/embed/QNuzgDrUXP0?autoplay=1";
 //   res.render("question", { question, answer, choices, youtubeLink });
 // });
-
 // router.get("/question/6", (req, res) => {
 //   let question = "Dummy Question 6";
 //   let choices = ["Right", "Wrong"];
@@ -119,7 +108,6 @@ router.get("/question/:index", async (req, res) => {
 //   let youtubeLink = "https://www.youtube.com/embed/QNuzgDrUXP0?autoplay=1";
 //   res.render("question", { question, answer, choices, youtubeLink });
 // });
-
 // router.get("/question/7", (req, res) => {
 //   let question = "Dummy Question 7";
 //   let choices = ["Wrong", "Right"];
@@ -127,7 +115,6 @@ router.get("/question/:index", async (req, res) => {
 //   let youtubeLink = "https://www.youtube.com/embed/QNuzgDrUXP0?autoplay=1";
 //   res.render("question", { question, answer, choices, youtubeLink });
 // });
-
 // router.get("/question/8", (req, res) => {
 //   let question = "Dummy Question 8";
 //   let choices = ["Right", "Wrong"];
@@ -135,7 +122,6 @@ router.get("/question/:index", async (req, res) => {
 //   let youtubeLink = "https://www.youtube.com/embed/QNuzgDrUXP0?autoplay=1";
 //   res.render("question", { question, answer, choices, youtubeLink });
 // });
-
 // router.get("/question/9", (req, res) => {
 //   let question = "Dummy Question 9";
 //   let choices = ["Wrong", "Right"];
