@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "dev": "env-cmd ./config/dev.env nodemon ./app.js",
     "test": "make test"
   },
   "repository": {
@@ -32,8 +31,5 @@
     "passport-local-mongoose": "^1.0.0",
     "serve-favicon": "^2.2.0",
     "should": "~2.1.0"
-  },
-  "devDependencies": {
-    "env-cmd": "^8.0.2"
   }
 }

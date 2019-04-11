@@ -49,11 +49,7 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-});
+mongoose.connect("mongodb://localhost/boiler");
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
