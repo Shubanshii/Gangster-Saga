@@ -14,7 +14,9 @@ let id = "";
 /*https://apifootball.com/api/?action=get_countries&APIkey=xxxxxxxxxxxxxx*/
 
 router.get("/", (req, res) => {
-  res.render("index", { user: req.user });
+  res.render("index", {
+    user: req.user
+  });
 });
 
 router.get("/register", (req, res) => {
@@ -22,10 +24,19 @@ router.get("/register", (req, res) => {
 });
 
 // get questions
-router.get("/questions", (req, res) => {
-  Question.find().then(questions => {
+router.get("/questions", async (req, res) => {
+  try {
+    const questions = await Question.find();
+    if (!questions) {
+      return res.status(404).send()
+    }
     res.send(questions);
-  });
+  } catch (e) {
+    res.status(500).send()
+  }
+  // Question.find().then(questions => {
+  //   res.send(questions);
+  // });
 });
 
 // post questions
@@ -47,7 +58,9 @@ router.post("/questions", async (req, res) => {
 
 router.get("/question/:index", async (req, res) => {
   try {
-    await Question.findOne({ index: req.params.index }).then(data => {
+    await Question.findOne({
+      index: req.params.index
+    }).then(data => {
       console.log("data", data);
 
       // res.render("question", { question.question, question.answer, question.choices, question.youtubeLink });
@@ -57,13 +70,23 @@ router.get("/question/:index", async (req, res) => {
         let answer = "";
         let youtubeLink =
           "https://www.youtube.com/embed/1zBwKbq02ds?autoplay=1";
-        res.render("question", { question, answer, choices, youtubeLink });
+        res.render("question", {
+          question,
+          answer,
+          choices,
+          youtubeLink
+        });
       } else {
         let question = data.question;
         let choices = data.choices;
         let answer = data.answer;
         let youtubeLink = data.youtubeLink;
-        res.render("question", { question, answer, choices, youtubeLink });
+        res.render("question", {
+          question,
+          answer,
+          choices,
+          youtubeLink
+        });
       }
     });
   } catch (e) {}
@@ -152,13 +175,6 @@ router.get("/question/:index", async (req, res) => {
 //   res.render("question", { question, answer, choices, youtubeLink });
 // });
 
-router.get("/question/11", (req, res) => {
-  let question = "You win!";
-  let choices = ["YOUWIN!"];
-  let answer = "";
-  let youtubeLink = "https://www.youtube.com/embed/1zBwKbq02ds?autoplay=1";
-  res.render("question", { question, answer, choices, youtubeLink });
-});
 
 router.get("/add-question", (req, res) => {
   res.render("add-question");
@@ -166,11 +182,16 @@ router.get("/add-question", (req, res) => {
 
 router.post("/register", (req, res, next) => {
   Account.register(
-    new Account({ username: req.body.username, points: 10 }),
+    new Account({
+      username: req.body.username,
+      points: 10
+    }),
     req.body.password,
     (err, account) => {
       if (err) {
-        return res.render("register", { error: err.message });
+        return res.render("register", {
+          error: err.message
+        });
       }
 
       passport.authenticate("local")(req, res, () => {
@@ -192,12 +213,15 @@ router.get("/get-id", (req, res) => {
 
 router.get("/soccer", (req, res) => {
   fetch(
-    "https://apifootball.com/api/?action=get_countries&APIkey=5edd98ce34fbd27acab549e7451bbafcf13f243565ebf20828fdf4625b7e2962"
-  )
+      "https://apifootball.com/api/?action=get_countries&APIkey=5edd98ce34fbd27acab549e7451bbafcf13f243565ebf20828fdf4625b7e2962"
+    )
     .then(res => res.json())
     .then(json => {
       console.log(json);
-      res.render("soccer", { beans: "10", teams: json });
+      res.render("soccer", {
+        beans: "10",
+        teams: json
+      });
     });
 });
 
@@ -221,10 +245,15 @@ router.get("/formation/:id", (req, res) => {
   console.log(req.params);
   //res.render('formation');
 
-  Formation.findOne({ _id: req.params.id })
+  Formation.findOne({
+      _id: req.params.id
+    })
     .exec()
     .then(f => {
-      res.render("formation", { formation: f, user: req.user });
+      res.render("formation", {
+        formation: f,
+        user: req.user
+      });
     })
     .catch(err => {
       throw err;
@@ -277,7 +306,9 @@ router.patch("/account/:id", async (req, res) => {
   );
 
   if (!isValidOperation) {
-    return res.status(400).send({ error: "Invalid updates" });
+    return res.status(400).send({
+      error: "Invalid updates"
+    });
   }
 
   try {
@@ -334,11 +365,16 @@ router.get("/profile", (req, res) => {
   //   .catch(err => {
   //     throw err;
   //   });
-  res.render("profile", { user: req.user });
+  res.render("profile", {
+    user: req.user
+  });
 });
 
 router.get("/login", (req, res) => {
-  res.render("login", { user: req.user, error: req.flash("error") });
+  res.render("login", {
+    user: req.user,
+    error: req.flash("error")
+  });
 });
 
 router.post(
