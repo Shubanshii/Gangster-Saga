@@ -211,91 +211,88 @@ router.get("/get-id", (req, res) => {
   res.send(id);
 });
 
-router.get("/soccer", (req, res) => {
-  fetch(
-      "https://apifootball.com/api/?action=get_countries&APIkey=5edd98ce34fbd27acab549e7451bbafcf13f243565ebf20828fdf4625b7e2962"
-    )
-    .then(res => res.json())
-    .then(json => {
-      console.log(json);
-      res.render("soccer", {
-        beans: "10",
-        teams: json
-      });
-    });
-});
+// router.get("/soccer", (req, res) => {
+//   fetch(
+//       "https://apifootball.com/api/?action=get_countries&APIkey=5edd98ce34fbd27acab549e7451bbafcf13f243565ebf20828fdf4625b7e2962"
+//     )
+//     .then(res => res.json())
+//     .then(json => {
+//       console.log(json);
+//       res.render("soccer", {
+//         beans: "10",
+//         teams: json
+//       });
+//     });
+// });
 
-router.post("/newFormation", (req, res) => {
-  let formation = new Formation(req.body);
-  console.log(req.body, req.user._id);
-  formation["date"] = new Date();
-  formation["author"] = req.user._id;
-  formation.save((err, f) => {
-    if (err) {
-      console.log(err);
-      return next(err);
-    }
-    console.log(f);
-    res.redirect(`/formation/${f._id}`);
-  });
-});
+// router.post("/newFormation", (req, res) => {
+//   let formation = new Formation(req.body);
+//   console.log(req.body, req.user._id);
+//   formation["date"] = new Date();
+//   formation["author"] = req.user._id;
+//   formation.save((err, f) => {
+//     if (err) {
+//       console.log(err);
+//       return next(err);
+//     }
+//     console.log(f);
+//     res.redirect(`/formation/${f._id}`);
+//   });
+// });
 
 //load the formation based on id
-router.get("/formation/:id", (req, res) => {
-  console.log(req.params);
-  //res.render('formation');
+// router.get("/formation/:id", (req, res) => {
+//   console.log(req.params);
+//   //res.render('formation');
 
-  Formation.findOne({
-      _id: req.params.id
-    })
-    .exec()
-    .then(f => {
-      res.render("formation", {
-        formation: f,
-        user: req.user
-      });
-    })
-    .catch(err => {
-      throw err;
-    });
-});
+//   Formation.findOne({
+//       _id: req.params.id
+//     })
+//     .exec()
+//     .then(f => {
+//       res.render("formation", {
+//         formation: f,
+//         user: req.user
+//       });
+//     })
+//     .catch(err => {
+//       throw err;
+//     });
+// });
 
 //load accounts to get data for high scores
-router.get("/accounts", (req, res) => {
-  Account.find().then(accounts => {
-    res.send(accounts);
-  });
-});
+router.get("/accounts", async (req, res) => {
+  try {
+    const accounts = await Account.find();
 
-// get req
-router.get("/get-req", (req, res) => {
-  console.log(req);
+    if (!accounts) {
+      return res.status(404).send()
+    }
+    res.send(accounts)
+  } catch (e) {
+    res.status(500).send()
+  }
+  // Account.find().then(accounts => {
+  //   res.send(accounts);
+  // });
 });
 
 //load account based on id
-router.get("/account/:id", (req, res) => {
-  console.log("req.body", req.body);
-  console.log("req.params", req.params);
-  //res.render('formation');
+router.get("/account/:id", async (req, res) => {
+  // console.log("req.body", req.body);
+  // console.log("req.params", req.params);
+  // //res.render('formation');
+  try {
+    const account = await Account.findById(req.params.id)
 
-  Account.findById(req.params.id)
-    .then(account => {
-      res.send(account);
-      //   res.render("formation", { formation: f, user: req.user });
-    })
-    .catch(err => {
-      throw err;
-    });
+    if (!account) return res.status(404).send()
 
-  //   Account.findOne({ _id: req.params.id })
-  //     .exec()
-  //     .then(f => {
-  //       console.log(f);
-  //       //   res.render("formation", { formation: f, user: req.user });
-  //     })
-  //     .catch(err => {
-  //       throw err;
-  //     });
+    res.send(account)
+
+  } catch (e) {
+    res.status(500).send()
+  }
+
 });
 
 router.patch("/account/:id", async (req, res) => {
