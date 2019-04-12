@@ -2,23 +2,30 @@
 	<h1>Profile Page</h1>
 
 	{{#if user}}
-	username: {{user.username}}
+	<p>username: {{user.username}}</p>
 	{{/if}}
-	<a href="/add-question">Add Question</a>
-	<form action="/newFormation" method="post">
+	<div class="buttons">
+		<button class="btn btn-success"><a href="/add-question">Add Question</a></button>
+		<button class="btn btn-danger delete">Delete Account</button>
+	</div>
+
+
+	{{!-- <form action="/newFormation" method="post">
 		<input type="text" name="name" value="Formation">
 		<input type="submit" value="Submit">
-	</form>
-	<div>
-		<button class="delete">Delete Account</button>
-	</div>
+	</form> --}}
 
 	{{#each formations}}
 	<ul>
 		<li><a href="/formation/{{this._id}}">{{this.name}}</a></li>
 	</ul>
 	{{/each}}
+
 	<div>
+		<button class="btn btn-danger"><a href="/question/0">Play</a></button>
+	</div>
+	<div>
+		<h1>Scores</h1>
 		<ul class="scores"></ul>
 	</div>
 </div>

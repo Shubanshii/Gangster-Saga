@@ -1,7 +1,13 @@
-{{question}}
-{{#each choices}}
-<button value={{this}}>{{this}}</button>
-{{/each}}
+<div class="text-center">
+  <div class="question">
+    <h4>{{question}}</h4>
+  </div>
+
+  {{#each choices}}
+  <button class="btn btn-primary" value={{this}}>{{this}}</button>
+  {{/each}}
+
+</div>
 
 <script>
   var answer = JSON.parse('{{{json answer}}}');

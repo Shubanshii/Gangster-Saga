@@ -7,3 +7,11 @@ a {
   /* color: #00b7ff; */
   color: white;
 }
+
+.buttons {
+  margin-bottom: 10px;
+}
+
+.question {
+  margin-bottom: 10px;
+}
