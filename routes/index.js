@@ -56,8 +56,9 @@ router.post("/questions", async (req, res) => {
   }
 });
 
-router.get("/question/:index", async (req, res) => {
+router.get("/question/:index", isLoggedIn, async (req, res) => {
   try {
+    console.log(req.user);
     await Question.findOne({
       index: req.params.index
     }).then(data => {
@@ -74,7 +75,8 @@ router.get("/question/:index", async (req, res) => {
           question,
           answer,
           choices,
-          youtubeLink
+          youtubeLink,
+          user: req.user
         });
       } else {
         let question = data.question;
@@ -85,11 +87,12 @@ router.get("/question/:index", async (req, res) => {
           question,
           answer,
           choices,
-          youtubeLink
+          youtubeLink,
+          user: req.user
         });
       }
     });
-  } catch (e) {}
+  } catch (e) { }
 });
 
 // router.get("/question/1", (req, res) => {
@@ -404,5 +407,13 @@ router.get("/logout", (req, res, next) => {
 router.get("/ping", (req, res) => {
   res.status(200).send("pong!");
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
 
 module.exports = router;

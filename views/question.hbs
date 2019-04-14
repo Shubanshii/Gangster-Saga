@@ -10,6 +10,8 @@
 </div>
 
 <script>
+  var user = JSON.parse('{{{json user}}}')
+  console.log('varuserjson', user)
   var answer = JSON.parse('{{{json answer}}}');
   var youtubeLink = JSON.parse('{{{json youtubeLink}}}');
   console.log(answer)
@@ -31,19 +33,19 @@
             contentType: "application/json"
           });
         }
-        getUser(patchUser);
-        function patchUser(user) {
-          console.log(user.points)
-          user.points -= 1;
-          console.log(user.points)
-          $.ajax({
-            type: "PATCH",
-            url: "/account/5caba693f71b2a4a988442a2",
-            data: JSON.stringify({ points: user.points }),
-            dataType: "json",
-            contentType: "application/json"
-          });
-        }
+        //getUser(patchUser);
+
+        console.log(user.points)
+        user.points -= 1;
+        console.log(user.points)
+        $.ajax({
+          type: "PATCH",
+          url: `/account/${user._id}`,
+          data: JSON.stringify({ points: user.points }),
+          dataType: "json",
+          contentType: "application/json"
+        });
+
       }
     }
   })
