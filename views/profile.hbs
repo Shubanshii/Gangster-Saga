@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container text-center">
 	<h1>Profile Page</h1>
 
 	{{#if user}}
@@ -24,9 +24,9 @@
 	<div>
 		<button class="btn btn-danger"><a href="/question/0">Play</a></button>
 	</div>
-	<div>
+	<div class="table">
 		<h1>Scores</h1>
-		<ul class="scores"></ul>
+		<div class="scores"></div>
 	</div>
 </div>
 
@@ -46,7 +46,7 @@
 	function appendScores(users) {
 		console.log(users)
 		users.forEach(user => {
-			$('.scores').append(`<li>${user.username}: ${user.points}</li>`);
+			$('.scores').append(`<p><span style="font-family:Impact, Charcoal, sans-serif">${user.username}</span>: ${user.points}</p>`);
 		})
 	}
 	getUsers(appendScores)

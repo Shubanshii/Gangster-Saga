@@ -37,11 +37,11 @@ function createQuestion() {
 
   getId(storeId);
 
-  $.fn.serializeObject = function() {
+  $.fn.serializeObject = function () {
     console.log("idstoreinfunc", idStore);
     var o = {};
     var a = this.serializeArray();
-    $.each(a, function() {
+    $.each(a, function () {
       if (o[this.name] !== undefined) {
         if (!o[this.name].push) {
           o[this.name] = [o[this.name]];
@@ -61,7 +61,7 @@ function createQuestion() {
     return o;
   };
 
-  $(".add-question").submit(function(event) {
+  $(".add-question").submit(function (event) {
     function postQuestion(callback) {
       $.ajax({
         type: "POST",
@@ -82,7 +82,7 @@ function createQuestion() {
   });
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
   console.log("loading client-side js");
   createQuestion();
 });
