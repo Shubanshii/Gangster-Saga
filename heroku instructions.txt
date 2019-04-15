@@ -1,0 +1,5 @@
+heroku create
+git add .
+git commit -m "testing deployment"
+git push
+git push heroku master

@@ -8,10 +8,26 @@ a {
   color: white;
 }
 
+img {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 .buttons {
   margin-bottom: 10px;
 }
 
 .question {
+  margin-bottom: 10px;
+}
+
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%
+}
+
+.login-buttons {
   margin-bottom: 10px;
 }
