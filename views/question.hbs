@@ -14,10 +14,12 @@
   console.log('varuserjson', user)
   var answer = JSON.parse('{{{json answer}}}');
   var youtubeLink = JSON.parse('{{{json youtubeLink}}}');
-  console.log(answer)
+  console.log('answer within dummy question', answer)
   $('button').click((e) => {
-    console.log(e.target.value)
-    if (e.target.value === answer) {
+    // console.log(e.target.value)
+    console.log(e.target.innerText)
+
+    if (e.target.innerText === answer) {
       window.location.href = `/question/${Number(location.href.replace(/.*\//, '')) + 1}`
     } else {
       let video = `<iframe src="${youtubeLink}"  width="560" height="315"  frameborder="0" allowfullscreen></iframe>`
