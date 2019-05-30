@@ -20,4 +20,4 @@ Node JS
 
 ## Authors
 
-* **Chris Day** - *Initial work* - [PurpleBooth](https://github.com/shubanshii)
+* **Chris Day** - *Initial work* - [Shubanshii](https://github.com/shubanshii)
